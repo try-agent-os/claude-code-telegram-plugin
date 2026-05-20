@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "telegram": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/dist/index.js"],
+      "env": {
+        "TELEGRAM_BOT_TOKEN": "${user_config.bot_token}",
+        "TELEGRAM_ADMIN_USER_IDS": "${user_config.admin_user_ids}",
+        "TELEGRAM_ADMIN_USERNAMES": "${user_config.admin_usernames}",
+        "TELEGRAM_MCP_MEDIA_DIR": "${CLAUDE_PLUGIN_DATA}/media",
+        "PORT": "0"
+      }
+    }
+  }
+}

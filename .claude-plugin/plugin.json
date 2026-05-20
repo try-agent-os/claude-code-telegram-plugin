@@ -1,0 +1,25 @@
+{
+  "name": "telegram",
+  "version": "1.0.0",
+  "description": "Telegram bot interface for Claude Code. Chat with your agent from Telegram — text, voice, photos, documents, links.",
+  "category": "communication",
+  "mcpServers": "../mcp.json",
+  "userConfig": {
+    "bot_token": {
+      "title": "Bot token",
+      "type": "string",
+      "sensitive": true,
+      "description": "Telegram bot API token from @BotFather"
+    },
+    "admin_user_ids": {
+      "title": "Admin user IDs",
+      "type": "string",
+      "description": "Comma-separated Telegram user IDs of authorized admins (get yours via @userinfobot)"
+    },
+    "admin_usernames": {
+      "title": "Admin usernames",
+      "type": "string",
+      "description": "Comma-separated Telegram usernames for display (parallel to admin_user_ids)"
+    }
+  }
+}
