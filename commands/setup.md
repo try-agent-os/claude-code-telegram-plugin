@@ -1,3 +1,7 @@
+---
+description: Install system dependencies (ffmpeg, cmake, whisper.cpp) and prepare the Telegram plugin for first use.
+---
+
 # /telegram:setup
 
 Install system dependencies and prepare the Telegram plugin for first use.

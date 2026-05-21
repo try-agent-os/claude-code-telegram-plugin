@@ -14,29 +14,35 @@ Chat with your Claude Code agent from Telegram. Send text, voice messages, photo
 - **Reactions** — emoji reactions forwarded to Claude as events
 - **OAuth login relay** — `/login` command for headless Claude authentication via Telegram
 
+## Requirements
+
+- [Claude Code](https://claude.ai/code) CLI v2.1.140+
+- Node.js 20 or later
+- For voice transcription: `ffmpeg` + `cmake` + a C compiler (auto-built via `nodejs-whisper`)
+
 ## Quick Start
 
-### 1. Install the marketplace (one-time)
+### 1. Add the marketplace (one-time)
 
 ```
-/plugin marketplace add try-agent-os/agentos-marketplace
+/plugin marketplace add try-agent-os/claude-marketplace
 ```
+
+Expected output: `Marketplace 'agentos' added successfully.`
 
 ### 2. Install the plugin
 
 ```
-/plugin install telegram
+/plugin install telegram@agentos
 ```
-
-### 3. Configure
 
 Claude Code will prompt you for:
 - **Bot token** — get one from [@BotFather](https://t.me/BotFather) in Telegram
 - **Admin user IDs** — your numeric Telegram user ID (get it from [@userinfobot](https://t.me/userinfobot))
 
-### 4. Setup system dependencies
+### 3. Install system dependencies
 
-Run the setup command inside Claude Code:
+Run inside Claude Code:
 
 ```
 /telegram:setup
@@ -44,9 +50,11 @@ Run the setup command inside Claude Code:
 
 This installs `ffmpeg`, `cmake`, and builds whisper.cpp for voice transcription.
 
-### 5. Done
+### 4. Done
 
 The Telegram MCP server starts automatically with every Claude Code session. Send a message to your bot — it appears as a channel notification in Claude.
+
+<!-- screenshot: phone-chat-vs-claude-tui.png -->
 
 ## Standalone Mode (without Claude Code plugin)
 
@@ -108,6 +116,20 @@ src/
   media-pipeline.ts — voice/video/URL transcription pipeline
   commands/         — bot commands (/help, /status, /tz, /login, /id)
 ```
+
+## Troubleshooting
+
+**Bot is silent in Telegram after `/plugin install`.**
+The plugin uses a `SessionStart` hook (`hooks/session-start.sh`) to `npm install` + `npm run build` on first session. Check `~/.claude/plugins/cache/<plugin-id>/dist/` exists. If not, run `npm install && npm run build` manually in the plugin cache directory, then restart Claude Code.
+
+**Voice transcription fails.**
+Ensure `ffmpeg` is on PATH and `nodejs-whisper` successfully downloaded a model on first run. Force a smaller model with `WHISPER_MODEL=tiny` if download time is excessive.
+
+**`/login` from Telegram does not return a code prompt.**
+Set `TELEGRAM_LOGIN_SCRIPT` to your `claude-login-pipe.sh` equivalent. See `src/login-flow.ts` for the protocol.
+
+**Multiple Claude sessions both responding to one Telegram message.**
+Only run one instance of the bot. The token is single-tenant — running two bots with the same token will cause polling conflicts (Telegram 409). Disable the plugin in extra sessions.
 
 ## License
 

@@ -1,6 +1,6 @@
 {
   "name": "claude-code-telegram-plugin",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Claude Code plugin: Telegram bot interface via grammY + MCP server",
   "main": "dist/index.js",
   "scripts": {

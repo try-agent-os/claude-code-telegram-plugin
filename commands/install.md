@@ -1,3 +1,7 @@
+---
+description: Install the Telegram MCP server on a local or remote server (skeleton — currently routes to /telegram:setup).
+---
+
 # /telegram:install
 
 Install the Telegram MCP server on a local or remote server.
